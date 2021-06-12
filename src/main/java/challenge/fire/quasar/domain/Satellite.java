@@ -1,8 +1,9 @@
 package challenge.fire.quasar.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Satellite extends ImperialShip{
+public class Satellite extends ImperialShip implements Serializable {
 
     private double distance;
 

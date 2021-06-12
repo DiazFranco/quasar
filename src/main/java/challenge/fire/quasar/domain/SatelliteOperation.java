@@ -1,9 +1,11 @@
 package challenge.fire.quasar.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SatelliteOperation {
 
     public SatelliteOperation() {

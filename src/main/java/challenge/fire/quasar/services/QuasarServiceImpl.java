@@ -1,18 +1,16 @@
 package challenge.fire.quasar.services;
 
-import challenge.fire.quasar.domain.Hauler;
-import challenge.fire.quasar.domain.ImperialShip;
-import challenge.fire.quasar.domain.Position;
-import challenge.fire.quasar.domain.SatelliteOperation;
+import challenge.fire.quasar.domain.*;
 import challenge.fire.quasar.exceptions.MessageException;
+import net.minidev.json.JSONObject;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Map;
 
 @Service
 @Configurable
@@ -33,10 +31,11 @@ public class QuasarServiceImpl implements QuasarService{
     private Environment environment;
 
 
-    public ImperialShip getImperialShip(RequestEntity requestEntity) throws MessageException {
+    public ImperialShip getImperialShip(SatelliteOperation satelliteOperation) throws MessageException {
 
-        SatelliteOperation satelliteOperation = (SatelliteOperation) requestEntity.getBody();
+        //SatelliteOperation satelliteOperation = (SatelliteOperation) requestEntity.getBody();
 
+        System.out.println(satelliteOperation.getMessages());
         if(satelliteOperation.getMessages().size() < 2)
             throw new MessageException("Nùmero de mensajes insuficientes");
 
@@ -62,5 +61,17 @@ public class QuasarServiceImpl implements QuasarService{
 
         return new Hauler(position, message);
 
+    }
+
+    public JSONObject getJsonFromMap(Map<String, Satellite> map) throws JSONException {
+        JSONObject jsonData = new JSONObject();
+        for (String key : map.keySet()) {
+            Object value = map.get(key);
+            if (value instanceof Map<?, ?>) {
+                value = getJsonFromMap((Map<String, Satellite>) value);
+            }
+            jsonData.put(key, value);
+        }
+        return jsonData;
     }
 }
