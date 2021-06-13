@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,9 +28,6 @@ public class CommunicationController {
     private QuasarService quasarService;
 
     private SatelliteRepository satelliteRepository;
-
-    private int count;
-
 
 
     @PostMapping("/")
@@ -76,8 +72,7 @@ public class CommunicationController {
     public ResponseEntity getPosition(){
         try {
            Map<String,Satellite> satellites = satelliteRepository.findAll();
-           //TODO Ver lógica
-           SatelliteOperation satelliteOperation = new SatelliteOperation();
+           SatelliteOperation satelliteOperation = new SatelliteOperation(satellites);
            return ResponseEntity.status(HttpStatus.OK).body(quasarService.getImperialShip(satelliteOperation));
         }catch (Exception message){
         message.printStackTrace();

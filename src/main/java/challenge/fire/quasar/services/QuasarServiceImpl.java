@@ -33,9 +33,6 @@ public class QuasarServiceImpl implements QuasarService{
 
     public ImperialShip getImperialShip(SatelliteOperation satelliteOperation) throws MessageException {
 
-        //SatelliteOperation satelliteOperation = (SatelliteOperation) requestEntity.getBody();
-
-        System.out.println(satelliteOperation.getMessages());
         if(satelliteOperation.getMessages().size() < 2)
             throw new MessageException("Nùmero de mensajes insuficientes");
 
