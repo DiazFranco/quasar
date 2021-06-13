@@ -75,9 +75,8 @@ public class CommunicationController {
            SatelliteOperation satelliteOperation = new SatelliteOperation(satellites);
            return ResponseEntity.status(HttpStatus.OK).body(quasarService.getImperialShip(satelliteOperation));
         }catch (Exception message){
-        message.printStackTrace();
+            return ResponseEntity.status(400).body("No hay suficiente información");
         }
-        return ResponseEntity.status(200).body(null);
     }
 
 

@@ -43,6 +43,7 @@ public class QuasarServiceImpl implements QuasarService{
         if (satelliteOperation.getPositions()[0] == null) {
             int satellites = Integer.parseInt(environment.getProperty("numbers.satellites"));
             double [][] points = new double[satellites][];
+            try {
             for (int i = 0; i < satelliteOperation.getSatellites().size(); i++) {
 
                 satellitePosition = environment.getProperty("satellites." + i + ".position").split(",");
@@ -51,6 +52,10 @@ public class QuasarServiceImpl implements QuasarService{
                         .toArray();
             }
             satelliteOperation.setPositions(points);
+
+            } catch (NullPointerException e){
+                throw new MessageException("No hay datos suficientes");
+            }
         }
 
         double [] points = locationService.getLocation(satelliteOperation.getPositions(), satelliteOperation.getDistances());
